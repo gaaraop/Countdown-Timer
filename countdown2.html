@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+</head>
+<script>
+    window.getTimeRemaining = function(endtime) {
+  var t = Date.parse(endtime) - (new Date()).getTime();
+  console.log(t);
+  var seconds = Math.floor( (t/1000) % 60 );
+  var minutes = Math.floor( (t/1000/60) % 60);
+  var hours = Math.floor( (t/(1000*60*60)) % 24);
+  var days = Math.floor( t/(1000*60*60*24) );
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+window.initializeClock = function(clockId, dateId) {
+    var clock = document.getElementById(clockId);
+    var deadline = document.getElementById(dateId).value;
+    var timeinterval = setInterval(function(){
+      var t = getTimeRemaining(deadline);
+      clock.innerHTML = 'Days: ' + t.days + '<br>' + 'Hours: ' + t.hours + '<br>' + 'Minutes: ' + t.minutes + '<br>' + 'Seconds: ' + t.seconds;
+      if(t.total<=0){
+        clearInterval(timeinterval);
+      }
+    }, 1000);
+}
+</script>
+<style>
+body{
+    background-image:url("cd3.jpeg");
+    background-size: cover;
+}
+h1{
+    text-align: center;
+    text-decoration: underline;
+}
+#formdiv{
+    text-align: center;
+    font-size: 25px;
+}
+#myDate{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}
+#clockdiv{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 30px;
+    height: 500px;
+    font-weight: 500;
+}
+.k{
+       height: 45px;
+       width: 60px;
+       margin-left: 10px;
+}
+</style>
+<body>
+    <div id="formdiv"> <h1>Please input your deadline</h1><br>
+    <input id="myDate" type="date">
+    <button class = "k" onclick="window.initializeClock('clockdiv', 'myDate')">Start</button>
+</div>
+<div id="clockdiv"></div>
+<<footer>&COPY; Made by gaara</footer>
+</body>
+</html>
